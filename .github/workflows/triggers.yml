@@ -1,4 +1,4 @@
-name: Curos de GitHub Actions
+name: Curso de GitHub Actions
 run-name: Estoy aprendiendo el uso de Triggers
 on:
   push:
