@@ -8,5 +8,5 @@ if (userNameGitHub is not null)
 }
 else
 {
-    Console.WriteLine($"¡Hola {username}, este es un codigo en {language}");
+    Console.WriteLine($"¡Hola {userName}, este es un codigo en {language}");
 }
