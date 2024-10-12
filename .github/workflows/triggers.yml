@@ -1,0 +1,68 @@
+name: Curso de GitHub Actions
+run-name: Estoy aprendiendo el uso de Triggers
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "**.cs"
+  issues:
+    types:
+      - labeled
+  workflow_dispatch:
+    inputs:
+      lenguaje_favorito:
+        description: "Lenguaje favorito"
+        default: C#
+        required: true
+        type: choice
+        options:
+          - Python
+          - JavaScript
+          - Go
+          - C#
+      nombre:
+        description: "Tu nombre"
+        required: true
+        default: MG
+        type: string
+  schedule:
+    - cron: "15 23 * * *"
+jobs:
+  hola-mundo-manual:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Run Application
+        env:
+          GITHUB_USER: ${{ github.actor }}
+          USERNAME: ${{ inputs.nombre }}
+          LANGUAGE: ${{ inputs.lenguaje_favorito}}
+        run: dotnet run
+
+  hola-mundo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Run Application
+        env:
+          GITHUB_USER: ${{ github.actor }}
+        run: dotnet run
